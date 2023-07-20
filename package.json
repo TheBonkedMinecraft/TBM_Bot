@@ -1,0 +1,20 @@
+{
+  "name": "tbm_bot",
+  "version": "1.0.0",
+  "description": "Auto-Whitelisting (and other stuff) Bot for The Bonked Minecraft community server.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Skullians, slowest____side",
+  "license": "ISC",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "dotenv": "^16.3.1",
+    "dotenv-extended": "^2.9.0",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "lowdb": "^6.0.1"
+  }
+}
