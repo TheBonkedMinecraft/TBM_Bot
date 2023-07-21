@@ -1,7 +1,12 @@
 require("dotenv").config();
 
 const fs = require("fs");
+const { FSDB } = require("file-system-db");
 const path = require("path");
+const CronJob = require('cron').CronJob;
+
+const usernames = new FSDB("./usernames.json", true);
+const whitelisting = new FSDB("./whitelisting.json", true);
 
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
 
@@ -13,6 +18,8 @@ client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
+
+
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -46,4 +53,32 @@ for (const file of eventFiles) {
 
 // Logging in, status, etc
 
+async function makeRequest(id, token, command) {
+	let params = {}
+
+	params["id"] = id
+	params["token"] = token
+	params["command"] = command
+
+	const encodedparams = new URLSearchParams(params)
+	const init = {
+		method: 'POST',
+		body: encodedparams,
+	};
+	return fetch(process.env.serverRequestURL, init)
+}
+
+const job = new CronJob('00 00 03 * * *', function () {
+	var users = usernames.get("users")
+	for (var i = 0; i < users.length; i++) {
+		console.log(i)
+		if (users[i].botSpawned == false) {
+			const mcName = users[i].username
+			users[i].botSpawned = true // DOESNT WORK
+			makeRequest(1, process.env.serverRequestTOKEN, `player ${users[i].username} spawn in spectator`);
+			delay(1000); // 1s delay for now
+		}
+	}
+});
+job.start();
 client.login(process.env.TOKEN);

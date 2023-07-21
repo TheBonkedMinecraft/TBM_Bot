@@ -1,5 +1,6 @@
 const { Events, ActivityType } = require('discord.js');
-
+const { FSDB } = require("file-system-db");
+const usernames = new FSDB("./usernames.json", true);
 let status = [
 	{
 		name: "to Wii Sports Bowling Sounds",
@@ -35,10 +36,29 @@ let status = [
 	}
 ]
 
+async function makeRequest(id, token, command) {
+	let params = {}
+
+	params["id"] = id
+	params["token"] = token
+	params["command"] = command
+
+	const encodedparams = new URLSearchParams(params)
+	const init = {
+		method: 'POST',
+		body: encodedparams,
+	};
+	return fetch(process.env.serverRequestURL, init)
+}
+
+function delay(time) {
+	return new Promise(resolve => setTimeout(resolve, time))
+}
+
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
-	execute(client) {
+	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 
 		setInterval(() => {
