@@ -128,7 +128,7 @@ module.exports = {
             const collectorFilter = i => i.user.id === interaction.user.id;
 
             try {
-                const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+                const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
                 if (confirmation.customId === "confirm") {
                     await confirmation.update({ embeds: [proceedingEmbed], components: [] });
                     await run(whitelistInterval, whitelistAmount);
@@ -140,7 +140,7 @@ module.exports = {
                 }
             } catch (e) {
                 console.log(e);
-                cancelEmbed.setDescription("Whitelisting aborted due to confirmation not being recieved within 1 minute.")
+                cancelEmbed.setDescription("User failed to confirm whitelisting, or an unknown error occured:\n**Error:** ```" + e + "```")
                 await interaction.editReply({ embeds: [cancelEmbed], components: [] })
             }
         }

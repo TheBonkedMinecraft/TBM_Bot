@@ -18,6 +18,8 @@ client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
+const errorChannelId = process.env.errorReportChannelId;
+
 
 
 for (const folder of commandFolders) {
@@ -50,6 +52,65 @@ for (const file of eventFiles) {
 	}
 }
 
+// Error Handling
+
+process.on("unhandledRejection", async (reason, promise) => {
+	console.error("Unhandled promise rejection:", reason, promise);
+	const newEmbed = new EmbedBuilder()
+		.setTitle("Anti-Crash System")
+		.setColor("Red")
+		.setTimestamp()
+		.setFooter({ text: "TBM Bot - The Bonked Minecraft", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
+		.setTitle("Error Encountered");
+	const Channel = client.channels.cache.get(errorChannelId);
+	if (!Channel) return;
+	Channel.send({
+		embeds: [
+			newEmbed.setDescription(
+				"**Unhandled Rejection/Catch:\n\n** ```" + reason + "```"
+			),
+		],
+	});
+});
+
+process.on("uncaughtException", (err) => {
+	console.error("Uncaught Exception:", err);
+	const Embed = new EmbedBuilder()
+		.setTitle("Anti-Crash System")
+		.setColor("Red")
+		.setTimestamp()
+		.setFooter({ text: "TBM Bot - The Bonked Minecraft", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
+		.setTitle("Error Encountered");
+	const Channel = client.channels.cache.get(errorChannelId);
+	if (!Channel) return;
+	Channel.send({
+		embeds: [
+			Embed.setDescription(
+				"**Uncaught Exception:\n\n** ```" + err + "```"
+			),
+		],
+	});
+});
+
+process.on("uncaughtExceptionMonitor", (err, origin) => {
+	console.error("Uncaught Exception:", err);
+	const Embed = new EmbedBuilder()
+		.setTitle("Anti-Crash System")
+		.setColor("Red")
+		.setTimestamp()
+		.setFooter({ text: "TBM Bot - The Bonked Minecraft", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
+		.setTitle("Error Encountered");
+	const Channel = client.channels.cache.get(errorChannelId);
+	if (!Channel) return;
+	Channel.send({
+		embeds: [
+			Embed.setDescription(
+				"**Uncaught Exception:\n\n** ```" + err + "``` -- Origin: ```" + origin + "```"
+			),
+		],
+	});
+});
+
 // Logging in, status, etc
 
 async function makeRequest(id, token, command) {
@@ -72,14 +133,14 @@ function delay(time) {
 }
 
 function returnAmount() {
-    var users = usernames.get("users")
-    let amount = 0
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].botSpawned == false) {
-            amount++;
-        }
-    }
-    return amount;
+	var users = usernames.get("users")
+	let amount = 0
+	for (var i = 0; i < users.length; i++) {
+		if (users[i].botSpawned == false) {
+			amount++;
+		}
+	}
+	return amount;
 }
 
 const job = new CronJob('00 00 03 * * *', function () {

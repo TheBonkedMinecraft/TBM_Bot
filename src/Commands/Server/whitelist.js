@@ -81,7 +81,8 @@ module.exports = {
 				await confirmation.update({ content: "❌** Aborted whitelist.**", components: [], embeds: [] });
 			}
 		} catch (e) {
-			await interaction.editReply({ content: "❌ Confirmation not recieved within 1 minute, aborting.", components: [], embeds: [] });
+			console.log(e);
+            cancelEmbed.setDescription("User failed to confirm whitelisting, or an unknown error occured:\n**Error:** ```" + e + "```")
 		}
 	}
 };
