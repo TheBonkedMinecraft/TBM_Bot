@@ -51,9 +51,6 @@ async function makeRequest(id, token, command) {
 	return fetch(process.env.serverRequestURL, init)
 }
 
-function delay(time) {
-	return new Promise(resolve => setTimeout(resolve, time))
-}
 
 module.exports = {
 	name: Events.ClientReady,
