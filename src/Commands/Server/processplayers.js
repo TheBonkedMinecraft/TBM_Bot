@@ -50,6 +50,7 @@ async function run(interval, amt) {
         }
     }
     makeRequest(1, process.env.serverRequestTOKEN, `say Automatic Whitelisting has completed, any lag should subside soon.`);
+    console.log(`Completed whitelisting of [${amt}] users for [${(((process.env.serverWhitelistingInterval * amt) + (amt * 30000)) / 1000) / 60}] minutes.`)
     return true;
 }
 
@@ -100,7 +101,7 @@ module.exports = {
             .setDescription("Beginning the whitelisting now.")
             .addFields(
                 { name: "Whitelist Count:", value: `${whitelistAmount} Players`, inline: true },
-                { name: "ETA:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 30000)) / 1000) / 60} minutes`, inline: true },
+                { name: "ETA:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 60500)) / 1000) / 60} minutes`, inline: true },
             )
             .setTimestamp()
             .setFooter({ text: "Made by Skullians and slowest____side", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
