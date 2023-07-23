@@ -24,7 +24,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('whitelist')
 		.setDescription('Whitelist a specified player.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
 		.addStringOption(option =>
 			option.setName("username")
 				.setDescription("Specify the Minecraft username to whitelist.")
@@ -76,7 +76,7 @@ module.exports = {
 
 			if (confirmation.customId === "confirm") {
 				usernames.push("users", { username: mcName, botSpawned: false, isWhitelisted: false, discordUserId: discordId })
-				await confirmation.update({ content: `✅** Successfully whitelisted *${mcName}*!**`, components: [], embeds: [] });
+				await confirmation.update({ content: `✅** Successfully whitelisted *${mcName}*.**`, components: [], embeds: [] });
 			} else if (confirmation.customId === "cancel") {
 				await confirmation.update({ content: "❌** Aborted whitelist.**", components: [], embeds: [] });
 			}

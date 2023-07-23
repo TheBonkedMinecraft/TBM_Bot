@@ -24,7 +24,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('unwhitelist')
 		.setDescription('Removes a specified player from the whitelist.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
 		.addStringOption(option =>
 			option.setName("username")
 				.setDescription("Specify the Minecraft username to remove from the whitelist.")
@@ -82,7 +82,7 @@ module.exports = {
 					makeRequest(1, process.env.serverRequestTOKEN, `whitelist remove ${user.username}`);
 					console.log(user.username);
 				});
-				await confirmation.update({ content: `✅** Successfully unwhitelisted *${mcName} / ${discordUser}*!**`, components: [], embeds: [] });
+				await confirmation.update({ content: `✅** Successfully unwhitelisted *${mcName} / ${discordUser}*.**`, components: [], embeds: [] });
 			} else if (confirmation.customId === "cancel") {
 				await confirmation.update({ content: "❌** Aborted unwhitelist.**", components: [], embeds: [] });
 			}

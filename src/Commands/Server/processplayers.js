@@ -29,9 +29,9 @@ async function run(interval, amt) {
     var users = usernames.get("users")
     makeRequest(1, process.env.serverRequestTOKEN, `say WARNING! Automatic whitelisting of players is about to commence, you will experience some lag.`);
     await delay(500)
-    makeRequest(1, process.env.serverRequestTOKEN, `say This automatic whitelisting will last [${(((process.env.serverWhitelistingInterval * amt) + (amt * 30000)) / 1000) / 60}] minutes.`)
+    makeRequest(1, process.env.serverRequestTOKEN, `say This automatic whitelisting will last [${(((process.env.serverWhitelistingInterval * amt) + (amt * 60000)) / 1000) / 60}] minutes.`)
     await delay(30000)
-    makeRequest(1, process.env.serverRequestTOKEN, `say WARNING! Automated Whitelisting is now commencing. Y`)
+    makeRequest(1, process.env.serverRequestTOKEN, `say WARNING! Automated Whitelisting is now commencing. You will experience lag.`)
     for (var i = 0; i < users.length; i++) {
         console.log(i)
         if (users[i].botSpawned == false) {
@@ -50,7 +50,7 @@ async function run(interval, amt) {
         }
     }
     makeRequest(1, process.env.serverRequestTOKEN, `say Automatic Whitelisting has completed, any lag should subside soon.`);
-    console.log(`Completed whitelisting of [${amt}] users for [${(((process.env.serverWhitelistingInterval * amt) + (amt * 30000)) / 1000) / 60}] minutes.`)
+    console.log(`Completed whitelisting of [${amt}] users for [${(((process.env.serverWhitelistingInterval * amt) + (amt * 60000)) / 1000) / 60}] minutes.`)
     return true;
 }
 
@@ -69,7 +69,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("processplayers")
         .setDescription("Force-start the processing of to-whitelist players.")
-        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks),
     async execute(interaction) {
         const whitelistInterval = process.env.serverWhitelistingInterval;
         const whitelistAmount = returnAmount();
@@ -101,7 +101,7 @@ module.exports = {
             .setDescription("Beginning the whitelisting now.")
             .addFields(
                 { name: "Whitelist Count:", value: `${whitelistAmount} Players`, inline: true },
-                { name: "ETA:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 60500)) / 1000) / 60} minutes`, inline: true },
+                { name: "ETA:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 60000)) / 1000) / 60} minutes`, inline: true },
             )
             .setTimestamp()
             .setFooter({ text: "Made by Skullians and slowest____side", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
@@ -112,7 +112,7 @@ module.exports = {
             .setDescription("Please confirm the whitelist you just requested.")
             .addFields(
                 { name: "Whitelist Amount:", value: `${whitelistAmount} Players`, inline: true },
-                { name: "Total Time:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 30000)) / 1000) / 60} minutes`, inline: true },
+                { name: "Total Time:", value: `${(((whitelistInterval * whitelistAmount) + (whitelistAmount * 60000)) / 1000) / 60} minutes`, inline: true },
             )
             .setTimestamp()
             .setFooter({ text: "Made by Skullians and slowest____side", iconURL: "https://avatars.githubusercontent.com/u/132810763?s=400&u=e4ebe8faa9fc33b56ff347918c41e220233484b7&v=4" })
