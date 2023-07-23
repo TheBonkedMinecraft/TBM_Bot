@@ -69,7 +69,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("processplayers")
         .setDescription("Force-start the processing of to-whitelist players.")
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks),
+        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
     async execute(interaction) {
         const whitelistInterval = process.env.serverWhitelistingInterval;
         const whitelistAmount = returnAmount();

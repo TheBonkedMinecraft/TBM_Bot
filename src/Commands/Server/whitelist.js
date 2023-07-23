@@ -24,7 +24,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('whitelist')
 		.setDescription('Whitelist a specified player.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
+		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
 		.addStringOption(option =>
 			option.setName("username")
 				.setDescription("Specify the Minecraft username to whitelist.")
