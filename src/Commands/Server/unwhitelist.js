@@ -79,7 +79,7 @@ module.exports = {
 					}
 				})
 				users.forEach(user => {
-					makeRequest(1, process.env.serverRequestTOKEN, `whitelist remove ${user.username}`);
+					makeRequest(5, process.env.serverRequestTOKEN, `whitelist remove ${user.username}`);
 					console.log(user.username);
 				});
 				await confirmation.update({ content: `✅** Successfully unwhitelisted *${mcName} / ${discordUser}*.**`, components: [], embeds: [] });
