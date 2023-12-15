@@ -146,29 +146,29 @@ function returnAmount() {
 const job = new CronJob('00 00 03 * * *', function () {
 	async function run(interval, amt) {
 		var users = usernames.get("users")
-		makeRequest(1, process.env.serverRequestTOKEN, `say WARNING! Automatic whitelisting of players is about to commence, you will experience some lag.`);
+		makeRequest(5, process.env.serverRequestTOKEN, `say WARNING! Automatic whitelisting of players is about to commence, you will experience some lag.`);
 		await delay(500)
-		makeRequest(1, process.env.serverRequestTOKEN, `say This automatic whitelisting will last [${(((process.env.serverWhitelistingInterval * amt) + (amt * 30000)) / 1000) / 60}] minutes.`)
+		makeRequest(5, process.env.serverRequestTOKEN, `say This automatic whitelisting will last [${(((process.env.serverWhitelistingInterval * amt) + (amt * 30000)) / 1000) / 60}] minutes.`)
 		await delay(30000)
-		makeRequest(1, process.env.serverRequestTOKEN, `say WARNING! Automated Whitelisting is now commencing. Y`)
+		makeRequest(5, process.env.serverRequestTOKEN, `say WARNING! Automated Whitelisting is now commencing. Y`)
 		for (var i = 0; i < users.length; i++) {
 			console.log(i)
 			if (users[i].botSpawned == false) {
 				console.log(`${users[i].username} is not spawned`)
 				users[i].botSpawned = true
-				makeRequest(1, process.env.serverRequestTOKEN, `player ${users[i].username} spawn in spectator`);
+				makeRequest(5, process.env.serverRequestTOKEN, `player ${users[i].username} spawn in spectator`);
 				console.log(`Spawned bot [${users[i].username}]`)
 				await delay(interval);
-				makeRequest(1, process.env.serverRequestTOKEN, `gamemode survival ${users[i].username}`);
-				makeRequest(1, process.env.serverRequestTOKEN, `player ${users[i].username} kill`);
-				makeRequest(1, process.env.serverRequestTOKEN, `whitelist add ${users[i].username}`);
+				makeRequest(5, process.env.serverRequestTOKEN, `gamemode survival ${users[i].username}`);
+				makeRequest(5, process.env.serverRequestTOKEN, `player ${users[i].username} kill`);
+				makeRequest(5, process.env.serverRequestTOKEN, `whitelist add ${users[i].username}`);
 				users[i].isWhitelisted = true
 				console.log(`Killed and Whitelisted user [${users[i].username}]`)
 				usernames.set("users", users);
 				await delay(30000)
 			}
 		}
-		makeRequest(1, process.env.serverRequestTOKEN, `say Automatic Whitelisting has completed, any lag should subside soon.`);
+		makeRequest(5, process.env.serverRequestTOKEN, `say Automatic Whitelisting has completed, any lag should subside soon.`);
 		console.log("Finished cron job (auto whitelisting).")
 	}
 
